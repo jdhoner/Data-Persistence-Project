@@ -54,4 +54,10 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(1);
 
     }
+
+    public void ShowHighScore()
+    {
+        SceneManager.LoadScene(2);
+
+    }
 }

@@ -4,26 +4,22 @@ using UnityEngine;
 
 public class TestScript : MonoBehaviour
 {
-    public string[] animals = { "cats", "dogs", "elephants", "zebra", "tiger", "hippo" };
+    // Test script used to try and figure out how to pull an array of high scores,
+    // rank them in descending order, then display the top x in a seperate scene
 
 
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartCoroutine(RankAnimals());
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    IEnumerator RankAnimals()
-    {
 
-        yield return new WaitForSeconds(2);
-        System.Array.Sort(animals);
-    }
+
+
+
+
+
+
+
+
+
+    // I could not
 }

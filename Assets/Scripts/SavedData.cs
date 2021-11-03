@@ -8,13 +8,14 @@ public class SavedData : MonoBehaviour
     public static SavedData Instance;
     public string playerName;
 
+    [SerializeField] DisplayHighScore displayHighScore;
     [SerializeField] MainManager mainManager;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 
-        if(Instance = null)
+        if(Instance != null)
         {
             Destroy(gameObject);
             return;
@@ -79,7 +80,7 @@ public class SavedData : MonoBehaviour
             string jsonScore = File.ReadAllText(scorePath);
             SavedHighScoreData score = JsonUtility.FromJson<SavedHighScoreData>(jsonScore);
 
-            mainManager.highScoreText.text = data.highScoreName +": "+score.highScoreNumber;
+            mainManager.highScoreText.text = "High Score - " + data.highScoreName +": "+score.highScoreNumber;
 
 
 
@@ -102,5 +103,27 @@ public class SavedData : MonoBehaviour
                 mainManager.saveHighScoreOption = true;
             }
         }
+    }
+
+
+    public void DisplayHighScore()
+    {
+        displayHighScore = GameObject.Find("Canvas").GetComponent<DisplayHighScore>();
+
+        string path = Application.persistentDataPath + "/savefile.json";
+        string scorePath = Application.persistentDataPath + "/scoresavefile.json";
+
+        if(File.Exists(path) && File.Exists(scorePath))
+        {
+            string json = File.ReadAllText(path);
+            SavedHighScoreData data = JsonUtility.FromJson<SavedHighScoreData>(json);
+
+            string jsonScore = File.ReadAllText(scorePath);
+            SavedHighScoreData score = JsonUtility.FromJson<SavedHighScoreData>(jsonScore);
+
+            displayHighScore.highScoreName.text = data.highScoreName;
+            displayHighScore.highScoreFigure.text = score.highScoreNumber.ToString();
+        }
+
     }
 }
