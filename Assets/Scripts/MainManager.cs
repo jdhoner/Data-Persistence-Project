@@ -11,10 +11,16 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text highScoreText;
     public GameObject GameOverText;
-    
+    public bool saveHighScoreOption;
+    public GameObject saveHighScoreButton;
+
+
+    public SavedData savedData;
+
     private bool m_Started = false;
-    private int m_Points;
+    public int m_Points;
     
     private bool m_GameOver = false;
 
@@ -22,6 +28,10 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        savedData = GameObject.Find("Saved Data").GetComponent<SavedData>();
+        ScoreText.text = $"{savedData.playerName} Score : {m_Points}";
+        savedData.LoadHighScore();
+
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -65,12 +75,22 @@ public class MainManager : MonoBehaviour
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        ScoreText.text = $"{savedData.playerName} Score : {m_Points}";
     }
 
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        savedData.ReplaceHighScore();
+        if(saveHighScoreOption)
+        {
+            saveHighScoreButton.SetActive(true);
+        }
+    }
+
+    public void SaveScore()
+    {
+        savedData.SaveHighScore();
     }
 }
